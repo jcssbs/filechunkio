@@ -29,37 +29,37 @@ class FileChunkIOTest(unittest.TestCase):
 
     def test_init_autosets_bytes(self):
         with FileChunkIO(self.tf) as c:
-            self.assertEquals(c.bytes, 45)
+            self.assertEqual(c.bytes, 45)
 
     def test_init_autosets_bytes_and_respects_offset(self):
         with FileChunkIO(self.tf, offset=1) as c:
-            self.assertEquals(c.bytes, 44)
+            self.assertEqual(c.bytes, 44)
 
     def test_init_seeks_to_offset(self):
         with FileChunkIO(self.tf, offset=1) as c:
-            self.assertEquals(c.tell(), 0)
-            self.assertEquals(c.read(1), b'2')
+            self.assertEqual(c.tell(), 0)
+            self.assertEqual(c.read(1), b'2')
 
     def test_seek_respects_offset(self):
         with FileChunkIO(self.tf, offset=1) as c:
             c.seek(1)
-            self.assertEquals(c.read(1), b'3')
+            self.assertEqual(c.read(1), b'3')
 
     def test_seek_cur(self):
         with FileChunkIO(self.tf, offset=20, bytes=10) as c:
             c.seek(5)
             c.seek(-3, SEEK_CUR)
-            self.assertEquals(c.tell(), 2)
+            self.assertEqual(c.tell(), 2)
 
     def test_seek_end(self):
         with FileChunkIO(self.tf, offset=10, bytes=10) as c:
             c.seek(-5, SEEK_END)
-            self.assertEquals(c.read(3), b'789')
+            self.assertEqual(c.read(3), b'789')
 
     def test_tell_respects_offset(self):
         with FileChunkIO(self.tf, offset=1) as c:
-            self.assertEquals(c.tell(), 0)
-            self.assertEquals(c.read(1), b'2')
+            self.assertEqual(c.tell(), 0)
+            self.assertEqual(c.read(1), b'2')
 
     def test_read_with_minus_one_calls_readall(self):
         with FileChunkIO(self.tf) as c:
@@ -72,14 +72,14 @@ class FileChunkIOTest(unittest.TestCase):
 
     def test_read_respects_offset_and_bytes(self):
         with FileChunkIO(self.tf, offset=1, bytes=3) as c:
-            self.assertEquals(c.read(), b'234')
+            self.assertEqual(c.read(), b'234')
 
     def test_readinto(self):
         with FileChunkIO(self.tf, offset=1, bytes=2) as c:
             n = 3
             b = bytearray(n.__index__())
             c.readinto(b)
-            self.assertEquals(b, b'23\x00')
+            self.assertEqual(b, b'23\x00')
 
     def test_readline(self):
         with FileChunkIO(self.tf, offset=1, bytes=20) as c:
@@ -89,11 +89,11 @@ class FileChunkIOTest(unittest.TestCase):
                 if not line:
                     break
                 lines.append(line)
-            self.assertEquals(lines, [b'23456789\n', b'234567891\n', b'3'])
+            self.assertEqual(lines, [b'23456789\n', b'234567891\n', b'3'])
 
     def test_readlines(self):
         with FileChunkIO(self.tf, offset=1, bytes=15) as c:
-            self.assertEquals(c.readlines(), [b'23456789\n', b'234567'])
+            self.assertEqual(c.readlines(), [b'23456789\n', b'234567'])
 
     def test_next(self):
         with FileChunkIO(self.tf, offset=1, bytes=20) as c:
@@ -103,7 +103,7 @@ class FileChunkIOTest(unittest.TestCase):
                     lines.append(next(c))
                 except StopIteration:
                     break
-            self.assertEquals(lines, [b'23456789\n', b'234567891\n', b'3'])
+            self.assertEqual(lines, [b'23456789\n', b'234567891\n', b'3'])
 
 
 if __name__ == '__main__':
