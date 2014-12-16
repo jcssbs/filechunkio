@@ -8,6 +8,7 @@ twice the disk space) or creating in-memory chunks as StringIO instances.
 
 ## EXAMPLE ##:
 ```
+
 #!python
 >>> from filechunkio import FileChunkIO
 >>> chunk = FileChunkIO('LICENCE', offset=646, bytes=201)
