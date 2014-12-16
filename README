@@ -22,4 +22,5 @@ twice the disk space) or creating in-memory chunks as StringIO instances.
 >>> chunk.seek(0)
 >>> chunk.readline()
 'THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n'
+
 ```
