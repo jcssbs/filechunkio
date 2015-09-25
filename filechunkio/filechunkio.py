@@ -28,6 +28,12 @@ class FileChunkIO(io.FileIO):
         super(FileChunkIO, self).__init__(name, mode, closefd, *args, **kwargs)
         self.seek(0)
 
+    # XXX: don't require reopening file for each chunk
+    def set_chunk(self, offset, bytes):
+        self.offset = offset
+        self.bytes = bytes
+        super(FileChunkIO, self).seek(self.offset)
+
     def seek(self, offset, whence=SEEK_SET):
         """
         Move to a new chunk position.
